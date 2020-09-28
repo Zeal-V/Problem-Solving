@@ -1,0 +1,63 @@
+//  https://codeforces.com/problemset/problem/115/A
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+
+public class Solution11 {
+	static long c = 0;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		int n = Integer.parseInt(br.readLine());
+		
+		ArrayList<Integer> al[] = new ArrayList[n + 1];
+		ArrayList<Integer> root = new ArrayList<>();
+		for(int i=0;i<al.length;i++)
+		{
+			al[i] = new ArrayList<Integer>();
+		}
+		
+		
+		for(int i=0;i<n;i++)
+		{
+			int a = Integer.parseInt(br.readLine());
+			if(a==-1)
+			{
+				root.add(i+1);
+//				al[i+1].add(0);
+//				al[0].add(i+1);
+			}
+			else
+			{
+				al[i+1].add(a);
+				al[a].add(i+1);
+			}
+		}
+//		al[0].add(1);
+//		al[1].add(0);
+		
+		for(int i=0;i<root.size();i++)
+		{
+			dfs(al,root.get(i),0,1);
+		}
+
+		System.out.println(c);
+	}
+	static void dfs(ArrayList<Integer> al[],int node,int par,int level)
+	{
+		c = Math.max(c, level);
+		for(int i=0;i<al[node].size();i++)
+		{
+			if(al[node].get(i)!=par)
+			{
+				dfs(al,al[node].get(i),node,level+1);
+			}
+		}
+	}
+
+}
